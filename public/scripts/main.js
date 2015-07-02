@@ -5,19 +5,19 @@ $(document).ready(function() {
 	// add one to index for current day
 	var days = [
 		{
-			Hotel: 'placeholder',
-			Restaurants: ['1', '2', '3'],
-			ThingsToDo: ['4', '5']
+			Hotel: '',
+			Restaurants: [],
+			ThingsToDo: []
 		},
 		{
-			Hotel: 'placeholder2',
-			Restaurants: ['21', '22', '23'],
-			ThingsToDo: ['24', '25']
+			Hotel: '',
+			Restaurants: [],
+			ThingsToDo: []
 		},
 		{
-			Hotel: 'placeholder3',
-			Restaurants: ['321', '322', '323'],
-			ThingsToDo: ['324', '325']
+			Hotel: '',
+			Restaurants: [],
+			ThingsToDo: []
 		}
 	];
 
@@ -61,9 +61,9 @@ $(document).ready(function() {
 		newBtn.insertBefore('#plusBtn');
 		// add new day object to days
 		days.push({
-			Hotel: 'placeholder' + dayNum,
-			Restaurants: [dayNum],
-			ThingsToDo: [dayNum]
+			Hotel: '',
+			Restaurants: [],
+			ThingsToDo: []
 		});
 	}
 
