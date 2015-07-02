@@ -35,8 +35,6 @@ $(document).ready(function() {
 		// set new list items
 		var dayValues = days[day - 1];
 		// check hotel is defined
-		if (dayValues['Hotel']) {
-			$('.hotelList').append($(newListElement(dayValues['Hotel'])));
 		}
 		dayValues['Restaurants'].forEach(function(restaurant) {
 			$('.restaurantList').append($(newListElement(restaurant)));
@@ -117,7 +115,6 @@ $(document).ready(function() {
 		var value = addButton.prev().val();
 		// add value to the correct day's array
 		var currentDay = parseInt($('.current-day').text());
-		days[currentDay - 1].Hotel = value;
 		setDay(currentDay);
 	});
 	$('#addRestaurant').on('click', function() {
