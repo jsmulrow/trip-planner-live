@@ -53,7 +53,7 @@ function initialize_gmaps() {
 }
 
 $(document).ready(function() {
-    initialize_gmaps();
+    // initialize_gmaps();
 });
 
 var styleArr = [
