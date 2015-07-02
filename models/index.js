@@ -23,7 +23,7 @@ var thingToDoSchema = new mongoose.Schema({
 	age_range: String
 });
 
-var restuarantSchema = new mongoose.Schema({
+var restaurantSchema = new mongoose.Schema({
 	name: String,
 	place: [placeSchema],
 	cuisine: String,
@@ -34,5 +34,5 @@ module.exports = {
 	Place: mongoose.model('Place', placeSchema),
 	Hotel: mongoose.model('Hotel', hotelSchema),
 	ThingToDo: mongoose.model('ThingToDo', thingToDoSchema),
-	Restaurant: mongoose.model('Restaurant', restuarantSchema)
-};
+	Restaurant: mongoose.model('Restaurant', restaurantSchema),
+}
