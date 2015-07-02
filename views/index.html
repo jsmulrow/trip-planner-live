@@ -83,10 +83,9 @@
 
 <script>
 {% autoescape false %}
-var all_hotels = {{ hotels | json }};
-var all_restaurants = {{ restaurants | json }};
-var all_things_to_do = {{ things_to_do | json }};
-
+var all_hotels = {{ all_hotels | json }};
+var all_restaurants = {{ all_restaurants | json }};
+var all_things_to_do = {{ all_things_to_do | json }};
 {% endautoescape %}
 </script>
 
