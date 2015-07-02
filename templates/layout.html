@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <title>Trip Planner — {% block title %}{% endblock %}</title>
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/main.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="navbar navbar-fixed-top" style="background:tomato;">[[navbar]]</div>
+    {% block content %}{% endblock %}
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDfQxgWt-LSZcEmTEN8581Uq9SzZHnpuys&sensor=true"></script>
+    <script src="/scripts/load-map.js"></script>
+  </body>
+</html>

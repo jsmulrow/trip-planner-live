@@ -1,0 +1,23 @@
+{
+  "name": "trip-planner-static-ui",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -e html,scss,js server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^1.3.0",
+    "body-parser": "^1.13.1",
+    "express": "^4.13.0",
+    "mongoose": "^4.0.6",
+    "morgan": "^1.6.0",
+    "node-sass-middleware": "^0.9.0",
+    "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.3.7"
+  }
+}

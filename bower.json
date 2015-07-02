@@ -1,0 +1,19 @@
+{
+  "name": "trip-planner-static-ui",
+  "version": "0.0.0",
+  "homepage": "https://github.com/FullstackAcademy/1506-Library",
+  "authors": [
+    "Omri Bernstein <hippiccolo@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}
