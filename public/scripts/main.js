@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
     // initialize new google maps LatLng object
@@ -20,7 +19,7 @@ $(document).ready(function() {
     	title:"Hello World!"
     });
     
-
+    // makes marker with the given location
     function drawLocation (location, opts) {
     	if (typeof opts !== 'object') {
     		opts = {};
@@ -28,15 +27,18 @@ $(document).ready(function() {
     	opts.position = new google.maps.LatLng(location[0], location[1]);
     	opts.map = map;
     	var marker = new google.maps.Marker(opts);
+    	// return marker so it can be accessed later
     	return marker;
     }
 
+    // places all markers in passed array on the passed map
     function setAllMap(markers, map){
     	for(var i = 0; i < markers.length; i++){
     		markers[i].setMap(map);
     	}
     }
 
+    // styles for the google map
     var styleArr = [
         {
         	"featureType": "landscape",
@@ -132,10 +134,10 @@ $(document).ready(function() {
         {}
     ];
 
-
-
 	var currentDay = $('#day-title span').text().match(/\d/)[0];
 	// add one to index for current day
+
+	// client side storage for each day's itinerary
 	var days = [
 		{
 			Hotel: {name: "", marker: null},
@@ -154,10 +156,14 @@ $(document).ready(function() {
 		}
 	];
 
+	// returns html itinerary list item with the passed text
 	function newListElement(text) {
 		return '<div class="itinerary-item"><span class="title">' + text + '</span><button class="btn btn-xs btn-danger remove btn-circle">x</button></div>';
 	}
 
+	// updates the itinerary list for the current day
+	//   optionally takes button node to change which button is active
+	//   and/or a boolean for switching the current day
 	function setDay(day, dayBtnNode, changeDay) {
 		// change header text
 		$('#day-title span').text("Day " + day);
@@ -178,24 +184,36 @@ $(document).ready(function() {
 		dayValues['ThingsToDo'].forEach(function(thing) {
 			$('.thingsToDoList').append($(newListElement(thing.name)));
 		});
-		if (!dayBtnNode) {
-			return;
+
+		// if given the new day's button, update it's class
+		if (dayBtnNode) {
+			// update current day CSS class
+			var oldCurrentDay = $('.current-day');
+			// remove old current class
+			oldCurrentDay.removeClass('current-day');
+			// add new one
+			dayBtnNode.addClass('current-day');
 		}
-		// update current day CSS class
-		var oldCurrentDay = $('.current-day');
+
+		// if switching days, update the itinerary list for the new day
 		if(changeDay){
-			clearAllDays(dayMarkers(parseInt(oldCurrentDay.text())));
+			// remove markers from the old day, if there is one
+			console.log('old current day', oldCurrentDay);
+			if (oldCurrentDay) {
+				clearAllDays(dayMarkers(parseInt(oldCurrentDay.text())));
+			}
+			console.log('new current day', day);
+			// set markers for the new day
 			setAllMap(dayMarkers(day), map);
 		}
-
-		oldCurrentDay.removeClass('current-day');
-		dayBtnNode.addClass('current-day');
 	}
 
+	// runs setMap(null) on each passed marker (ie removes each marker from map)
     function clearAllDays(markers){
     	setAllMap(markers, null);
     }
 
+    // returns a concatenated array of the passed day's hotel, restaurant, and thing markers
     function dayMarkers(day) {
 	    var i = day - 1;
 	    // find all markers
@@ -206,7 +224,7 @@ $(document).ready(function() {
 	    var thingMarkers = days[i].ThingsToDo.map(function(thing) {
 	        return thing.marker;
 	    });
-
+	    // check if hotel marker is falsy to prevent returning array with only null inside
 	    if (hotelMarker) return thingMarkers.concat(restMarkers, hotelMarker);
 	    return thingMarkers.concat(restMarkers);
 	}
@@ -219,7 +237,7 @@ $(document).ready(function() {
 		newBtn.insertBefore('#plusBtn');
 		// add new day object to days
 		days.push({
-			Hotel: {name: "", marker: null},
+			Hotel: {name: '', marker: null},
 			Restaurants: [],
 			ThingsToDo: []		
 		});
@@ -267,7 +285,7 @@ $(document).ready(function() {
 		removeDay();
 		updateDayButtons();
 		// load day one's data
-		setDay(1);
+		setDay(1, null, true);
 		// make day 1 active
 		$($('.day-btn')[0]).addClass('current-day');
 	});
@@ -280,12 +298,13 @@ $(document).ready(function() {
 		// add value to the correct day's array
 		var currentDay = parseInt($('.current-day').text());
 
+		// search data for matching hotel
 		var match = all_hotels.filter(function(hotel){
-			return hotel.name === value
-		})
+			return hotel.name === value;
+		});
 
+		// extract location array from match's place attribute
 		var hotelLocation = match[0]['place'][0]['location'];
-		// drawLocation(hotelLocation, {icon: '/images/lodging_0star.png'});
 
 		var hotelObj = days[currentDay - 1].Hotel = {name: value, marker: drawLocation(hotelLocation,{icon: '/images/lodging_0star.png'})};
 		setDay(currentDay);
@@ -300,16 +319,18 @@ $(document).ready(function() {
 		var value = addButton.prev().val();
 		// add value to the correct day's array
 
+		// search data for matching restaurant
 		var match = all_restaurants.filter(function(restaurant){
-			return restaurant.name === value
-		})
+			return restaurant.name === value;
+		});
 
+		// extract location array from match's place attribute
 		var restaurantLocation = match[0]['place'][0]['location'];	
 		days[currentDay - 1].Restaurants.push({name: value, marker: drawLocation(restaurantLocation, {icon: '/images/restaurant.png'})});
 		
 		var markers = days[currentDay - 1].Restaurants.map(function(restObj){
 			return restObj.marker;
-		})
+		});
 		setDay(currentDay);
 	});
 	$('#addThingToDo').on('click', function() {
@@ -319,16 +340,18 @@ $(document).ready(function() {
 		// add value to the correct day's array
 		var currentDay = parseInt($('.current-day').text());
 
+		// search data for matching thing to do
 		var match = all_things_to_do.filter(function(thing){
-			return thing.name === value
-		})
+			return thing.name === value;
+		});
 
+		// extract location array from match's place attribute
 		var thingToDoLocation = match[0]['place'][0]['location'];		
 		days[currentDay - 1].ThingsToDo.push({name: value, marker: drawLocation(thingToDoLocation, {icon: '/images/star-3.png'})});
 		
 		var markers = days[currentDay - 1].ThingsToDo.map(function(thingObj){
 			return thingObj.marker;
-		})
+		});
 
 		setDay(currentDay);
 	});
@@ -340,10 +363,11 @@ $(document).ready(function() {
 		var value = removeButton.prev().text();
 		// find the current day
 		var currentDay = parseInt($('.current-day').text());
-		days[currentDay - 1].Hotel.marker.setMap(null);
 		// remove this value from that day's hotels
 		days[currentDay - 1].Hotel = {name: ''};
 		// remove the element from the itinerary
+		days[currentDay - 1].Hotel.marker.setMap(null);
+
 		setDay(currentDay);
 	});
 	$('.restaurantItinerary').on('click', 'button', function() {
@@ -358,11 +382,12 @@ $(document).ready(function() {
 		var index = 0;
 		restaurantArr.forEach(function(restObj, i){
 			if(restObj.name === value) index = i;
-		})
+		});
 
+		// remove the element from the itinerary
 		restaurantArr[index].marker.setMap(null);
 		restaurantArr.splice(index, 1);
-		// remove the element from the itinerary
+
 		setDay(currentDay);
 	});
 	$('.thingsToDoItinerary').on('click', 'button', function() {
@@ -377,16 +402,15 @@ $(document).ready(function() {
 		var index = 0;
 		thingsArr.forEach(function(thingObj, i){
 			if(thingObj.name === value) index = i;
-		})
-
+		});
+		
+		// remove the element from the itinerary
 		thingsArr[index].marker.setMap(null);
 		thingsArr.splice(index, 1);
-		// remove the element from the itinerary
+
 		setDay(currentDay);
 	});
 
-
 	// initialize the day
 	setDay(currentDay);
-
 });
