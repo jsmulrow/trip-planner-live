@@ -306,10 +306,17 @@ $(document).ready(function() {
 	$('#removeDayBtn').on('click', function() {
 		removeDay();
 		updateDayButtons();
-		// load day one's data
-		setDay(1, null, true);
-		// make day 1 active
-		$($('.day-btn')[0]).addClass('current-day');
+
+		// find old day
+		var oldDay = parseInt($('#removeDayBtn').prev().text().match(/\d/)[0]);
+		if (oldDay === 1) {
+			oldDay++;
+		}
+
+		// load previous day's data
+		setDay(oldDay - 1, null, true);
+		// make previous day active
+		$($('.day-btn')[oldDay - 2]).addClass('current-day');
 	});
 
 	// add to itinerary buttons
