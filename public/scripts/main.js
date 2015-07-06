@@ -204,6 +204,18 @@ $(document).ready(function() {
 			// set markers for the new day
 			setAllMap(dayMarkers(day), map);
 		}
+
+		// set the map's bounds
+
+		// console.log(dayMarkers(day));
+
+		var markerArr = dayMarkers(day);
+
+		if (markerArr.length) {
+			setBounds(markerArr);
+		} else {
+			map = new google.maps.Map(map_canvas_obj, mapOptions);
+		}
 	}
 
 	// runs setMap(null) on each passed marker (ie removes each marker from map)
@@ -225,6 +237,18 @@ $(document).ready(function() {
 	    // check if hotel marker is falsy to prevent returning array with only null inside
 	    if (hotelMarker) return thingMarkers.concat(restMarkers, hotelMarker);
 	    return thingMarkers.concat(restMarkers);
+	}
+
+	// loops through passed markers and sets the map's bounds
+	function setBounds(markers) {
+		// make new bounds object
+		var bounds = new google.maps.LatLngBounds();
+		// update bounds for each marker
+		for (var i = 0; i < markers.length; i++) {
+			bounds.extend(markers[i].position);
+		}
+		// fit the map to the bounds
+		map.fitBounds(bounds);
 	}
 
 	function addDay() {
