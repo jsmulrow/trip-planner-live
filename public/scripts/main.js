@@ -198,11 +198,9 @@ $(document).ready(function() {
 		// if switching days, update the itinerary list for the new day
 		if(changeDay){
 			// remove markers from the old day, if there is one
-			console.log('old current day', oldCurrentDay);
 			if (oldCurrentDay) {
 				clearAllDays(dayMarkers(parseInt(oldCurrentDay.text())));
 			}
-			console.log('new current day', day);
 			// set markers for the new day
 			setAllMap(dayMarkers(day), map);
 		}
