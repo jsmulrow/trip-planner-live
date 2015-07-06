@@ -206,14 +206,14 @@ $(document).ready(function() {
 		}
 
 		// set the map's bounds
-
-		// console.log(dayMarkers(day));
-
 		var markerArr = dayMarkers(day);
 
+		// if there are markers
 		if (markerArr.length) {
+			// set bounds for those markers
 			setBounds(markerArr);
 		} else {
+			// otherwise, display a fresh map
 			map = new google.maps.Map(map_canvas_obj, mapOptions);
 		}
 	}
